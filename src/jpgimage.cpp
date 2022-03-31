@@ -182,6 +182,7 @@ DataBuf Photoshop::setIptcIrb(const byte* pPsData, size_t sizePsData, const Iptc
   // Write existing stuff after record,
   // skip the current and all remaining IPTC blocks
   size_t pos = sizeFront;
+  enforce(pos <= sizePsData, ErrorCode::kerCorruptedMetadata);
   while (0 == Photoshop::locateIptcIrb(pPsData + pos, sizePsData - pos, &record, &sizeHdr, &sizeIptc)) {
     const auto newPos = static_cast<size_t>(record - pPsData);
     // Copy data up to the IPTC IRB
